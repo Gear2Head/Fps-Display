@@ -60,6 +60,7 @@ jobs:
           files: |
             dist/OSD-Overlay.exe
             dist/OSD-Overlay-Setup.exe
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
