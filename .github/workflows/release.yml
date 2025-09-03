@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   build:
     runs-on: windows-latest
@@ -41,6 +45,7 @@ jobs:
             OSD-Overlay-Setup.exe
 
   release:
+
     needs: build
     runs-on: windows-latest
     steps:
@@ -57,3 +62,7 @@ jobs:
             dist/OSD-Overlay-Setup.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+          
+
