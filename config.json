@@ -1,0 +1,11 @@
+{
+	"refreshMs": 500,
+	"presentMon": {
+		"enabled": false,
+		"processName": ""
+	},
+	"update": {
+		"check": true,
+		"url": "https://github.com/Gear2Head/Fps-Display/releases/latest"
+	}
+}
