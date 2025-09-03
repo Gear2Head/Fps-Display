@@ -2,3 +2,5 @@ psutil==5.9.8
 pynvml==11.5.0
 pywin32==306
 requests==2.32.3
+pystray==0.19.5
+Pillow==10.1.0

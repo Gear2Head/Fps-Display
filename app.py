@@ -5,12 +5,17 @@ import traceback
 from typing import Optional
 
 from metrics import SystemMetricsCollector
-from ui_overlay import OverlayWindow
+from ui_overlay import ModernOverlayWindow
 
 try:
 	from fps_presentmon import PresentMonReader
 except Exception:
 	PresentMonReader = None  # type: ignore
+
+try:
+	from tray_manager import TrayManager
+except Exception:
+	TrayManager = None  # type: ignore
 
 
 def load_config() -> dict:
@@ -74,7 +79,20 @@ def main() -> None:
 		present_mon.start()
 
 	collector = SystemMetricsCollector()
-	overlay = OverlayWindow(on_close=None)
+	overlay = ModernOverlayWindow(on_close=None)
+	
+	# Tray manager
+	tray_manager = None
+	if TrayManager is not None:
+		try:
+			tray_manager = TrayManager(
+				on_show=lambda: overlay.root.deiconify(),
+				on_hide=lambda: overlay.root.withdraw(),
+				on_quit=lambda: overlay.close()
+			)
+			tray_manager.start()
+		except Exception:
+			tray_manager = None
 
 	try:
 		while True:
@@ -106,6 +124,8 @@ def main() -> None:
 	finally:
 		if present_mon is not None:
 			present_mon.stop()
+		if tray_manager is not None:
+			tray_manager.stop()
 		collector.close()
 		overlay.close()
 
